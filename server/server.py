@@ -25,11 +25,12 @@ while True:
     team_result_lines = team_result.readlines()
 
     b = open((BACKUP_FOLDER + '/' + time.strftime(BACKUP_FORMAT)).replace(':', '-'), 'w')
-    b.write(team_name_lines)
+    for i in team_name_lines:
+        b.write(i)
     b.write('--------------')
-    b.write(team_result_lines)
+    for i in team_result_lines:
+        b.write(i)
     b.close()
-    
     
     print(time.strftime(TIME_FORMAT) + " => " + str(team_name_lines))
     print(time.strftime(TIME_FORMAT) + " => " + str(team_result_lines))
@@ -37,6 +38,8 @@ while True:
     conn, address = s.accept()
     for i in team_name_lines:
         conn.send(str.encode(i))
+    conn.close()
+    conn, address = s.accept()
     for i in team_result_lines:
         conn.send(str.encode(i))
 

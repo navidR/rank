@@ -37,8 +37,19 @@ def update_interval():
 def update_table(): 
     print("update_table")
     # Open Socket to Server and Read from Socket
-
+    team_name_str = ""
     team_result_str = ""
+    s = socket.socket()
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    s.connect(ADDRESS)
+    while True:
+        t = bytes.decode(s.recv(MAX_BUF))
+        if len(t) != 0:
+            team_name_str += t
+        else:
+            break
+    print(time.strftime(TIME_FORMAT) + " => " + str(team_name_str))
+    s.close()
     s = socket.socket()
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.connect(ADDRESS)
@@ -51,28 +62,15 @@ def update_table():
 
     print(time.strftime(TIME_FORMAT) + " => " + str(team_result_str))
     s.close()
+    team_name = open(TEAM_NAME, 'w')
+    team_name.write(team_name_str)
+    team_name.close()
     team_result = open(TEAM_RESULT, 'w')
     team_result.write(team_result_str)
     team_result.close()
     return True
 
 
-team_name_str = ""
-s = socket.socket()
-s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-s.connect(ADDRESS)
-while True:
-    t = bytes.decode(s.recv(MAX_BUF))
-    if len(t) != 0:
-        team_name_str += t
-    else:
-        break
-print(time.strftime(TIME_FORMAT) + " => " + str(team_name_str))
-s.close()
-
-team_name = open(TEAM_NAME, 'w')
-team_name.write(team_name_str)
-team_name.close()
 
 builder = Gtk.Builder()
 builder.add_from_file(BUILDER_FILE_STR)
