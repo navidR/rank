@@ -61,7 +61,7 @@ class Update_Table():
         #                               0 ,  1 ,  2 ,  3 ,  4 ,  5 ,  6 ,  7 ,  8 ,  9 , 10 , 11 , 12
         self.liststore = Gtk.ListStore(int, str, int, int, int, str, str, str, str, str, str, str, str)
         for i in range(1, TEAM_NUMBER + 1):
-            self.liststore.append(list((i, 'unknown', 0, 0, 0, '-', '-', '-', '-', '-', '-', '-', '-')))
+            self.liststore.append(list((i, 'unknown', 0, 0, 0, '✗', '✗', '✗', '✗', '✗', '✗', '✗', '✗')))
 
         #self.liststore = Gtk.ListStore(int, str)
         #for i in range(0, 24):
@@ -190,7 +190,7 @@ class Update_Table():
                         plist.append(int(question))
                     else:
                         s += 1
-                        self.liststore[i - 1][5 + int(question)] = 'Ok' # Solved Index
+                        self.liststore[i - 1][5 + int(question)] = '✔' # Solved Index
                         if m < int(r):
                             m = int(r)
                         if int(question) in plist:
