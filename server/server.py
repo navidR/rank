@@ -44,5 +44,7 @@ while True:
         conn.send(str.encode(i))
 
     conn.close()
+    team_name.flush()
     team_name.close()
+    team_result.flush()
     team_result.close()
